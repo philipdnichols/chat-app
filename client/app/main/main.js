@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chatAppApp')
+angular.module('chatApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('main', {

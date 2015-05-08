@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chatAppApp')
+angular.module('chatApp')
   .controller('MainCtrl', function ($scope, $http, socket) {
     $scope.awesomeThings = [];
 

@@ -3,7 +3,7 @@
 describe('Controller: MainCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('chatAppApp'));
+  beforeEach(module('chatApp'));
   beforeEach(module('socketMock'));
 
   var MainCtrl,
