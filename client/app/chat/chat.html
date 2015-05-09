@@ -10,27 +10,10 @@
       </div>
     </div>
     <div class="col-md-8 well">
-      <table class="table table-striped table-bordered">
-        <thead>
-          <th>
-            Author
-          </th>
-          <th>
-            Message
-          </th>
-          <th>
-            Time
-          </th>
-        </thead>
+      <table class="table table-striped">
         <tr ng-repeat="message in messages">
-          <td class="col-md-2">
-            {{message.author}}
-          </td>
           <td>
-            {{message.text}}
-          </td>
-          <td class="col-md-2">
-            {{message.time | date: 'short'}}
+            <strong>{{message.author}}:</strong> {{message.text}} <small><em>{{message.time | date: 'short'}}</em></small>
           </td>
         </tr>
       </table>
