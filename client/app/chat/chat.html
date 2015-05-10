@@ -5,21 +5,21 @@
       <div class="form-horizontal">
         <label for="chatName" class="col-md-4 control-label">Chatting As</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" id="chatName" ng-model="chatName">
+          <input type="text" class="form-control" id="chatName" ng-model="chat.chatName">
         </div>
       </div>
     </div>
     <div class="col-md-8 well">
       <table class="table table-striped">
-        <tr ng-repeat="message in messages">
+        <tr ng-repeat="message in chat.messages">
           <td>
             <strong>{{message.author}}:</strong> {{message.text}} <small><em>{{message.time | date: 'short'}}</em></small>
           </td>
         </tr>
       </table>
-      <form ng-submit="sendMessage()">
+      <form ng-submit="chat.sendMessage()">
         <div class="input-group">
-          <input type="text" class="form-control" placeholder="Message..." id="newMessage" ng-model="newMessage">
+          <input type="text" class="form-control" placeholder="Message..." id="newMessage" ng-model="chat.newMessage">
           <span class="input-group-btn">
             <button class="btn btn-primary" type="submit">Send</button>
           </span>

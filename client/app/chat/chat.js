@@ -7,7 +7,8 @@
         .state('chat', {
           url: '/chat',
           templateUrl: 'app/chat/chat.html',
-          controller: 'ChatCtrl'
+          controller: 'ChatController',
+          controllerAs: 'chat'
         });
     });
 })();
