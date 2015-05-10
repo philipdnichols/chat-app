@@ -2,32 +2,46 @@
   'use strict';
 
   angular.module('chatApp')
-    .controller('ChatCtrl', function($scope, $http, socket) {
-      $scope.messages = [];
+    .controller('ChatController', ChatController);
 
-      $scope.chatName = '';
-      $scope.newMessage = '';
+  ChatController.$inject = ['$scope', '$http', 'socket'];
+
+  function ChatController($scope, $http, socket) {
+    var chat = this;
+
+    chat.init = init;
+    chat.sendMessage = sendMessage;
+
+    function init() {
+      chat.messages = [];
+
+      chat.chatName = '';
+      chat.newMessage = '';
 
       $http.get('/api/chatMessages').success(function(chatMessages) {
-        $scope.messages = chatMessages;
-        socket.syncUpdates('chatMessage', $scope.messages);
+        chat.messages = chatMessages;
+        socket.syncUpdates('chatMessage', chat.messages);
+      });
+    }
+
+    function sendMessage() {
+      if (chat.newMessage === '') {
+        return;
+      }
+
+      $http.post('/api/chatMessages', {
+        text: chat.newMessage,
+        author: (chat.chatName === '') ? 'Anonymous' : chat.chatName,
+        time: Date.now()
       });
 
-      $scope.sendMessage = function() {
-        if ($scope.newMessage === '') {
-          return;
-        }
+      chat.newMessage = '';
+    }
 
-        $http.post('/api/chatMessages', {
-          text: $scope.newMessage,
-          author: ($scope.chatName === '') ? 'Anonymous' : $scope.chatName,
-          time: Date.now()
-        });
-        $scope.newMessage = '';
-      };
-
-      $scope.$on('$destroy', function() {
-        socket.unsyncUpdates('chatMessage');
-      });
+    $scope.$on('$destroy', function() {
+      socket.unsyncUpdates('chatMessage');
     });
+
+    chat.init();
+  }
 })();
