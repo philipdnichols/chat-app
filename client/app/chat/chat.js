@@ -8,7 +8,16 @@
           url: '/chat',
           templateUrl: 'app/chat/chat.html',
           controller: 'ChatController',
-          controllerAs: 'chat'
+          controllerAs: 'chat',
+          resolve: {
+            getAllChatMessagesPromise: [
+              'ChatMessageService',
+              function(ChatMessageService) {
+                ChatMessageService.initSocket();
+                return ChatMessageService.getAll();
+              }
+            ]
+          }
         });
     });
 })();

@@ -1,6 +1,7 @@
 // Socket mock taken from socket-io.js from angular-socket-io
 // TODO just pull in the 'socket' var definition from the socket-io.js "somehow" :)
 (function() {
+  /*jshint unused: false */
   'use strict';
 
   angular.module('socketMock', [])
@@ -16,8 +17,6 @@
         emit: function(ev, data) {
           if (this._listeners[ev]) {
             var args = arguments;
-            console.log(args);
-            console.log(data);
             this._listeners[ev].forEach(function(listener) {
               if (listener._once) {
                 this.removeListener(ev, listener);

@@ -31,9 +31,11 @@
     "module": true,
     "inject": true,
     "it": true,
+    "xit": true,
     "expect": true,
     "browser": true,
     "element": true,
-    "by": true
+    "by": true,
+    "jasmine": true
   }
 }

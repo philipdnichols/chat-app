@@ -4,24 +4,19 @@
   angular.module('chatApp')
     .controller('ChatController', ChatController);
 
-  ChatController.$inject = ['$scope', '$http', 'socket'];
+  ChatController.$inject = ['$scope', 'ChatMessageService'];
 
-  function ChatController($scope, $http, socket) {
+  function ChatController($scope, ChatMessageService) {
     var chat = this;
 
     chat.init = init;
     chat.sendMessage = sendMessage;
 
     function init() {
-      chat.messages = [];
+      chat.messages = ChatMessageService.chatMessages;
 
       chat.chatName = '';
       chat.newMessage = '';
-
-      $http.get('/api/chatMessages').success(function(chatMessages) {
-        chat.messages = chatMessages;
-        socket.syncUpdates('chatMessage', chat.messages);
-      });
     }
 
     function sendMessage() {
@@ -29,7 +24,7 @@
         return;
       }
 
-      $http.post('/api/chatMessages', {
+      ChatMessageService.sendMessage({
         text: chat.newMessage,
         author: (chat.chatName === '') ? 'Anonymous' : chat.chatName,
         time: Date.now()
@@ -39,7 +34,7 @@
     }
 
     $scope.$on('$destroy', function() {
-      socket.unsyncUpdates('chatMessage');
+      ChatMessageService.unInitSocket();
     });
 
     chat.init();
